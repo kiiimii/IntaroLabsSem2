@@ -1,0 +1,22 @@
+{
+    "name": "bazara_jack/library",
+    "autoload": {
+        "psr-4": {
+            "BazaraJack\\Library\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "kiiimii",
+            "email": "puster.izd@mail.ru"
+        }
+    ],
+    "require": {
+        "symfony/http-foundation": "^8.0",
+        "symfony/routing": "^8.0",
+        "symfony/config": "^8.0",
+        "symfony/yaml": "^8.0",
+        "twig/twig": "^3.0",
+        "symfony/mime": "^8.0"
+    }
+}

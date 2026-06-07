@@ -1,0 +1,41 @@
+home:
+  path: /
+  controller: BazaraJack\Library\Controller\HomeController::index
+
+books:
+  path: /books
+  controller: BazaraJack\Library\Controller\BookController::index
+
+login_form:
+    path: /login
+    controller: BazaraJack\Library\Controller\AuthController::showLoginForm
+    methods: [GET]
+
+login_check:
+    path: /login
+    controller: BazaraJack\Library\Controller\AuthController::login
+    methods: [POST]
+
+logout:
+    path: /logout
+    controller: BazaraJack\Library\Controller\AuthController::logout
+
+book_add_form:
+    path: /books/add
+    controller: BazaraJack\Library\Controller\BookController::showAddForm
+    methods: [GET]
+
+book_add_process:
+    path: /books/add
+    controller: BazaraJack\Library\Controller\BookController::add
+    methods: [POST]
+
+book_edit_process:
+    path: /books/edit/{id}
+    controller: BazaraJack\Library\Controller\BookController::edit
+    methods: [GET,POST]
+
+book_delete:
+    path: /books/delete/{id}
+    controller: BazaraJack\Library\Controller\BookController::delete
+    methods: [POST]

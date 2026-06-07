@@ -1,0 +1,64 @@
+[terminal.shell]
+program = "/usr/bin/zsh"
+args = ["--login"]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 20
+padding.y = 20
+dimensions = {columns = 120, lines = 30}
+
+
+decorations = "Buttonless"
+opacity = 0.7
+blur = true
+
+[font]
+normal.family = "JetBrainsMono Nerd Font"
+size = 12.0
+
+
+
+[colors.primary]
+# Делаем фон чисто черным, чтобы прозрачность выглядела как тонированное стекло
+background = '#000000'
+foreground = '#eceff4' # Чистый светлый текст
+
+[colors.normal]
+black   = '#1b1b1b'
+red     = '#bf616a' # Спокойный красный
+green   = '#a3be8c' # Приглушенный зеленый
+yellow  = '#ebcb8b'
+blue    = '#81a1c1' # Ледяной синий (хорошо сочетается со стеклом)
+magenta = '#4c566a' # ЗАМЕНА: Глубокий серо-синий (вместо фиолетового)
+cyan    = '#88c0d0'
+white   = '#e5e9f0'
+
+[colors.bright]
+black   = '#4c566a'
+red     = '#bf616a'
+green   = '#a3be8c'
+yellow  = '#ebcb8b'
+blue    = '#81a1c1'
+magenta = '#d8dee9' # Светло-стальной
+cyan    = '#8fbcbb'
+white   = '#eceff4'
+
+
+
+# тотал black
+# [colors.primary]
+# background = '#0a0a0a' # Почти черный, но не "вырвиглазный"
+# foreground = '#d4d4d4' # Спокойный серый текст
+
+# [colors.normal]
+#black   = '#1a1a1a'
+#red     = '#cc6666'
+#green   = '#b5bd68'
+#yellow  = '#f0c674'
+#blue    = '#81a2be'
+#magenta = '#8e908c' # Вместо фиолетового — нейтральный серый
+#cyan    = '#8abeb7'
+#white   = '#c5c8c6'

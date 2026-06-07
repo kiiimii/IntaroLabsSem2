@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редактирование | {{ book.title }}{% endblock %}
+
+{% block body %}
+    <h2>Редактировать книгу</h2>
+
+    <form action="/books/edit/{{ book.id }}" method="POST" enctype="multipart/form-data" style="max-width: 500px; display: flex; flex-direction: column; gap: 15px;">
+        <label>Название:
+            <input type="text" name="title" value="{{ book.title }}" required style="width: 100%;">
+        </label>
+
+        <label>Автор:
+            <input type="text" name="author" value="{{ book.author }}" required style="width: 100%;">
+        </label>
+
+        <label>Дата прочтения:
+            <input type="date" name="read_date" value="{{ book.read_date }}" required>
+        </label>
+
+        <div style="padding: 10px; border: 1px solid #eee;">
+            <p><strong>Обложка:</strong></p>
+            {% if book.cover_path %}
+                <img src="/{{ book.cover_path }}" width="60" style="display:block; margin-bottom: 5px;">
+                <label style="color: red; font-size: 0.8em;">
+                    <input type="checkbox" name="delete_cover"> Удалить текущую обложку
+                </label>
+            {% endif %}
+            <input type="file" name="cover" accept="image/*">
+        </div>
+
+        <div style="padding: 10px; border: 1px solid #eee;">
+            <p><strong>Файл книги:</strong></p>
+            {% if book.file_path %}
+                <label style="color: red; font-size: 0.8em;">
+                    <input type="checkbox" name="delete_file"> Удалить текущий файл
+                </label>
+            {% endif %}
+            <input type="file" name="book_file">
+        </div>
+
+        <label>
+            <input type="checkbox" name="allow_download" value="1" {{ book.allow_download ? 'checked' : '' }}>
+            Разрешить скачивание
+        </label>
+
+        <div>
+            <button type="submit" class="btn btn-add">Сохранить изменения</button>
+            <a href="/" style="margin-left: 10px;">Отмена</a>
+        </div>
+    </form>
+{% endblock %}

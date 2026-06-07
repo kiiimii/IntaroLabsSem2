@@ -1,0 +1,117 @@
+# ==============================================================================
+# 💡 ШПАРГАЛКА ПО TMUX (Твой конфиг)
+# ==============================================================================
+# Твой префикс: Ctrl + a (далее <Prefix>)
+#
+# --- СЕССИИ (SESSIONS) ---
+# <Prefix> + s       - Список всех сессий (choose-tree)
+# <Prefix> + $       - Переименовать текущую сессию
+# <Prefix> + d       - Отключиться (Detach), сессия продолжит жить в фоне
+# :kill-session      - Удалить текущую сессию (вводить после <Prefix> + :)
+# tmux ls            - (В терминале) Показать список сессий
+# tmux a -t name     - (В терминале) Подключиться к сессии "name"
+# tmux kill-server   - (В терминале) Убить ВЕСЬ tmux со всеми сессиями
+#
+# --- ОКНА (WINDOWS / ВКЛАДКИ) ---
+# <Prefix> + c       - Создать новое окно
+# <Prefix> + ,       - Переименовать текущее окно
+# <Prefix> + 1..9    - Перейти на окно по номеру
+# <Prefix> + &       - Убить (закрыть) текущее окно
+#
+# --- ПАНЕЛИ (PANES / РАЗДЕЛЕНИЕ) ---
+# <Prefix> + |       - Разделить по вертикали
+# <Prefix> + -       - Разделить по горизонтали
+# <Prefix> + m       - Zoom (развернуть панель на весь экран и обратно)
+# <Prefix> + x       - Закрыть текущую панель (нужно подтверждение y/n)
+# <Prefix> + h/j/k/l - Изменить размер панели (твои бинды с resize-pane)
+# Ctrl + h/j/k/l     - Переход между панелями (Vim-style без префикса)
+#
+# --- КОПИРОВАНИЕ И РЕЖИМ ПРАВКИ (VI-MODE) ---
+# <Prefix> + [       - Войти в режим прокрутки/копирования
+#   В режиме копирования:
+#   v                - Начать выделение (как в Vim)
+#   y                - Скопировать выделенное
+#   Esc / q          - Выйти из режима копирования
+# <Prefix> + ]       - Вставить скопированное (Paste)
+#
+# --- ПЛАГИНЫ И КОНФИГ ---
+# <Prefix> + r       - Перезагрузить конфиг (~/.tmux.conf)
+# <Prefix> + I       - Установить новые плагины (Install)
+# <Prefix> + U       - Обновить плагины (Update)
+# <Prefix> + Ctrl+s  - Сохранить состояние вручную (Resurrect Save)
+# <Prefix> + Ctrl+r  - Восстановить состояние вручную (Resurrect Restore)
+# ==============================================================================
+
+
+
+# --- Общие настройки ---
+set -g default-terminal "tmux-256color"
+set -g status-position top
+set -g base-index 1
+setw -g pane-base-index 1
+set -g mouse on
+setw -g mode-keys vi
+
+# --- Переназначение клавиш ---
+set -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+
+# Перезагрузка конфига
+bind r source-file ~/.tmux.conf
+
+# Разделение панелей
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+
+# Навигация и изменение размера (Vim-style)
+bind -r j resize-pane -D 5
+bind -r k resize-pane -U 5
+bind -r l resize-pane -R 5
+bind -r h resize-pane -L 5
+bind -r m resize-pane -Z
+bind s choose-tree -sZ -O name
+
+# Копирование (Vim-style)
+bind-key -T copy-mode-vi 'v' send -X begin-selection
+bind-key -T copy-mode-vi 'y' send -X copy-selection
+unbind -T copy-mode-vi MouseDragEnd1Pane
+
+# --- Плагины ---
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'christoomey/vim-tmux-navigator'
+set -g @plugin 'tmux-plugins/tmux-cpu'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+
+# --- Настройки плагинов ---
+set -g @continuum-restore 'on'
+set -g @resurrect-processes 'ssh nvim nano'
+set -g @continuum-save-interval '7'
+
+# --- Глобальные параметры прозрачности ---
+set -g status-style "bg=default"
+set -g status-justify left
+
+# --- Левая часть: Список окон ---
+set -g window-status-format "#[fg=brightblack,bg=default] #I #W "
+set -g window-status-current-format "#[fg=blue,bg=default,bold] #I #W "
+
+# --- Правая часть: Статусы ---
+set -g status-right-length 100
+set -g status-left ""
+
+set -g status-right "#[fg=blue,bg=default]  #{cpu_percentage} "
+set -ag status-right "#[fg=yellow,bg=default]  #{pane_current_command} "
+set -ag status-right "#[fg=green,bg=default] 󱂬 #S "
+set -ag status-right "#[fg=cyan,bg=default] 󱎫 #(tmux display-message -p -F '##{session_created}' | awk '{age=int(systime()-$1); printf \"%%dh %%dm\", age/3600, (age%%3600)/60}') "
+
+# --- Настройка границ панелей ---
+set -g pane-border-style "fg=brightblack,bg=default"
+set -g pane-active-border-style "fg=blue,bg=default"
+
+# --- Запуск TPM ---
+run '~/.tmux/plugins/tpm/tpm'

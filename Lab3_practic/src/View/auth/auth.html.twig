@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Вход в систему{% endblock %}
+
+{% block body %}
+<div style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;">
+    <h2 style="text-align: center;">Вход в библиотеку</h2>
+
+    {% if error %}
+        <div style="color: white; background: #d9534f; padding: 10px; margin-bottom: 15px; border-radius: 4px; text-align: center;">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="/login" style="display: flex; flex-direction: column; gap: 15px;">
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="email">Email / Логин:</label>
+            <input type="text" id="email" name="email" required 
+                   style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required 
+                   style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+
+        <button type="submit" class="btn btn-login" style="cursor: pointer; font-size: 16px;">
+            Войти
+        </button>
+    </form>
+</div>
+{% endblock %}

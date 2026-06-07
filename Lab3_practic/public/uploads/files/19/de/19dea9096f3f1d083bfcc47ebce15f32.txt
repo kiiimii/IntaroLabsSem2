@@ -1,0 +1,48 @@
+# Powerlevel10k instant prompt
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Путь к Oh My Zsh
+export ZSH="$HOME/.oh-my-zsh"
+
+# Тема
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Плагины (убедитесь, что они установлены в $ZSH_CUSTOM/plugins/)
+plugins=(git docker zsh-syntax-highlighting zsh-autosuggestions history)
+
+source $ZSH/oh-my-zsh.sh
+
+# Исправленные пути для Arch Linux
+export KUBECONFIG="$HOME/.kube/config"
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export TERMINAL=alacritty
+
+# Алиасы
+alias ls="eza --tree --level=1 --icons=always --no-time --no-user --no-permissions"
+
+# Интеграция fzf
+eval "$(fzf --zsh)"
+
+# Функция Yazi
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+# Загрузка конфига Powerlevel10k
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# --- АВТОМАТИЧЕСКИЙ ЗАПУСК TMUX ---
+# Запускает tmux при открытии терминала, если мы не в SSH и не внутри другого tmux
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux new-session -A -s default
+fi

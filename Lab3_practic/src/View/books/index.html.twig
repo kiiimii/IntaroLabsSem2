@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список книг - Library{% endblock %}
+
+{% block body %}
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Книги в порядке прочтения</h2>
+        {% if isAuth %}
+            <a href="/books/add" class="btn btn-add">+ Добавить книгу</a>
+        {% endif %}
+    </div>
+
+    {% for book in books %}
+        <div class="book-card">
+            <div class="book-cover-box">
+                {% if book.cover_path %}
+                    <img src="/{{ book.cover_path }}" alt="{{ book.title }}" class="book-cover">
+                {% else %}
+                    <div class="book-cover" style="display:flex; align-items:center; justify-content:center; font-size:12px;">Нет фото</div>
+                {% endif %}
+            </div>
+
+            <div class="book-info">
+                <h3>{{ book.title }}</h3>
+                <p><strong>Автор:</strong> {{ book.author }}</p>
+                <p><strong>Прочитано:</strong> {{ book.read_date|date("d.m.Y") }}</p>
+
+                {% if book.allow_download and book.file_path %}
+                    <p><a href="/{{ book.file_path }}" download>💾 Скачать</a></p>
+                {% endif %}
+
+                {% if isAuth %}
+                    <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;">
+                        <a href="/books/edit/{{ book.id }}">✏️ Редактировать</a> | 
+                        <form action="/books/delete/{{ book.id }}" method="POST" style="display:inline;" onsubmit="return confirm('Точно удалить эту книгу?');">
+                            <button type="submit" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0;">
+                                🗑 Удалить
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <p>Библиотека пуста. Добавьте свою первую книгу!</p>
+    {% endfor %}
+{% endblock %}

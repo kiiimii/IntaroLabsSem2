@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Добавить новую книгу{% endblock %}
+
+{% block body %}
+    <h2>Добавление книги</h2>
+
+    <form action="/books/add" method="POST" enctype="multipart/form-data" style="max-width: 500px; display: flex; flex-direction: column; gap: 1rem;">
+        <label>
+            Название:
+            <input type="text" name="title" required style="width: 100%;">
+        </label>
+
+        <label>
+            Автор:
+            <input type="text" name="author" required style="width: 100%;">
+        </label>
+
+        <label>
+            Дата прочтения:
+            <input type="date" name="read_date" value="{{ "now"|date("Y-m-d") }}" required>
+        </label>
+
+        <label>
+            Обложка (изображение):
+            <input type="file" name="cover" accept="image/*">
+        </label>
+
+        <label>
+            Файл книги (PDF, EPUB и т.д.):
+            <input type="file" name="book_file">
+        </label>
+
+        <label>
+            <input type="checkbox" name="is_downloadable" value="1" checked>
+            Разрешить скачивание пользователям
+        </label>
+
+        <div style="margin-top: 1rem;">
+            <button type="submit" class="btn btn-add">Сохранить</button>
+            <a href="/" style="margin-left: 10px;">Отмена</a>
+        </div>
+    </form>
+{% endblock %}
