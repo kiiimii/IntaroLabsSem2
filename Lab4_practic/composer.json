@@ -1,0 +1,19 @@
+{
+    "name": "bazara_jack/geocoder",
+    "autoload": {
+        "psr-4": {
+            "BazaraJack\\Geocoder\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "kiiimii",
+            "email": "puster.izd@mail.ru"
+        }
+    ],
+    "require": {
+        "symfony/http-foundation": "^8.0",
+        "symfony/routing": "^8.0",
+        "twig/twig": "^3.26"
+    }
+}

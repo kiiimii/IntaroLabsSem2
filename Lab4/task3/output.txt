@@ -1,0 +1,5 @@
+select first, second, third, fourth, fifth, sixth
+from test_table
+where first < 10 and second = 10 and (third like 'val' or fourth <= 20 or (fifth > 30 and sixth != 40))
+order by first asc
+limit 10;

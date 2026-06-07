@@ -1,0 +1,46 @@
+services:
+  web:
+    build: .
+    container_name: geocoder_app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html 
+    environment:
+      - DB_HOST=db
+      - DB_NAME=geocoder_db
+      - DB_USER=geo_user
+      - DB_PASSWORD=geo_password
+      - YANDEX_API_KEY=49577e20-0fe7-4bc8-816d-69cd795af1d3
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: geocoder_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: geocoder_db
+      MYSQL_USER: geo_user
+      MYSQL_PASSWORD: geo_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql  
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: geocoder_pma
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=root_password
+    depends_on:
+      - db
+
+volumes:
+  db_data:
