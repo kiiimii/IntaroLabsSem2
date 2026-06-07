@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лендинг с формой обратной связи</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        /* Подсветка ошибок */
+        input.error, textarea.error {
+            border-color: #ff4d4d;
+            background-color: #fff5fff5;
+        }
+        .error-message {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .success-box {
+            display: none;
+            line-height: 1.6;
+        }
+        .success-box h3 {
+            color: #28a745;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Форма обратной связи -->
+    <form id="feedbackForm" novalidate>
+        <h2>Связаться с нами</h2>
+        <div id="formError" class="error-message"></div>
+
+        <div class="form-group">
+            <label for="fio">ФИО *</label>
+            <input type="text" id="fio" name="fio" placeholder="Иванов Иван Иванович">
+        </div>
+
+        <div class="form-group">
+            <label for="email">E-mail *</label>
+            <input type="email" id="email" name="email" placeholder="example@test.com">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Телефон *</label>
+            <input type="tel" id="phone" name="phone" placeholder="+7 (999) 999-99-99">
+        </div>
+
+        <div class="form-group">
+            <label for="comment">Комментарий *</label>
+            <textarea id="comment" name="comment" placeholder="Ваш комментарий"></textarea>
+        </div>
+
+        <button type="submit">Отправить</button>
+    </form>
+
+    <!-- Сообщение об успешной отправке -->
+    <div id="successMessage" class="success-box">
+        <h3>Оставлено сообщение из формы обратной связи.</h3>
+        <p><strong>Фамилия:</strong> <span id="resLast"></span></p>
+        <p><strong>Имя:</strong> <span id="resFirst"></span></p>
+        <p><strong>Отчество:</strong> <span id="resMiddle"></span></p>
+        <p><strong>E-mail:</strong> <span id="resEmail"></span></p>
+        <p><strong>Телефон:</strong> <span id="resPhone"></span></p>
+        <p><i>С Вами свяжутся после <span id="resContactTime"></span></i></p>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

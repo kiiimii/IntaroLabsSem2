@@ -1,0 +1,38 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:80"  
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor 
+    environment:
+      DB_HOST: db
+      DB_NAME: feedback_db
+      DB_USER: user
+      DB_PASSWORD: password
+      SMTP_HOST: mailhog
+      SMTP_PORT: 1025
+    depends_on:
+      - db
+      - mailhog
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: feedback_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - db_data:/var/lib/mysql
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+
+volumes:
+  db_data:
